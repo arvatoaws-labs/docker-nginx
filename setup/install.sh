@@ -6,6 +6,7 @@ NGINX_RTMP_MODULE_DOWNLOAD_URL="https://github.com/arut/nginx-rtmp-module/archiv
 NGX_PAGESPEED_DOWNLOAD_URL="https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VERSION}-beta.tar.gz"
 PSOL_DOWNLOAD_URL="https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz"
 LIBAV_DOWNLOAD_URL="https://libav.org/releases/libav-${LIBAV_VERSION}.tar.gz"
+NGX_UPSTREAM_RESOLVE_MK_URL="https://github.com/HatsuneMiku3939/ngx_upstream_resolveMK/archive/master.tar.gz"
 
 RUNTIME_DEPENDENCIES="libssl1.0.0 libxslt1.1 libpcre++ libgd3 libxpm4 libgeoip1"
 BUILD_DEPENDENCIES="make gcc g++ libssl-dev libxslt-dev libpcre++-dev libgd2-xpm-dev libgeoip-dev"
@@ -46,6 +47,12 @@ ${WITH_PAGESPEED} && {
   EXTRA_ARGS="${EXTRA_ARGS} --add-module=${NGINX_SETUP_DIR}/ngx_pagespeed"
   download_and_extract "${NGX_PAGESPEED_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/ngx_pagespeed"
   download_and_extract "${PSOL_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/ngx_pagespeed/psol"
+}
+
+# prepare upstream_resolveMK module support
+${WITH_UPSTREAM_RESOLVE_MK} && {
+  EXTRA_ARGS="${EXTRA_ARGS} --add-module=${NGINX_SETUP_DIR}/ngx_upstream_resolveMK"
+  download_and_extract "${NGX_UPSTREAM_RESOLVE_MK_URL}" "${NGINX_SETUP_DIR}/ngx_upstream_resolveMK"
 }
 
 # enable debug support
